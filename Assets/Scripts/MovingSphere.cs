@@ -6,19 +6,20 @@ public class MovingSphere : MonoBehaviour
     [SerializeField] private float _speed;
 
     private Transform _transform;
-    private float _startPositionZ;
+    private Vector3 _startPosition;
 
     private void Awake()
     {
         _transform = transform;
-        _startPositionZ = _transform.position.z;
+        _startPosition = _transform.position;
     }
 
     private void Update()
     {
-        float newPositionZ = _startPositionZ + Mathf.PingPong(Time.time * _speed, _distance);
+        float step = Mathf.PingPong(Time.time * _speed, _distance);
+        Vector3 newPosition = _startPosition + (_transform.forward * step);
 
-        _transform.position = new Vector3(_transform.position.x, _transform.position.y, newPositionZ);
+        _transform.position = newPosition;
     }
 
 }
